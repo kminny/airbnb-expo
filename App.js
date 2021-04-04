@@ -1,5 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Image, Text } from 'react-native';
 
@@ -12,6 +14,8 @@ const cacheImages = (images) =>
     }
   });
 
+const cacheFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
+
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const handleFinish = () => setIsReady((isReady) => !isReady);
@@ -20,7 +24,10 @@ export default function App() {
       require('./assets/loginBg.jpeg'),
       'https://ebenezersuites.com/wp-content/uploads/2016/06/airbnb-logo-266x300@2x.png',
     ];
-    console.log(cacheImages(images));
+    const fonts = [Ionicons.font];
+    const imagePromises = cacheImages(images);
+    const fontPromises = cacheFonts(fonts);
+    return Promise.all([...imagePromises, ...fontPromises]);
   };
 
   return isReady ? (
