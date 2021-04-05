@@ -7,16 +7,18 @@ import colors from '../../colors';
 const { width } = Dimensions.get('screen');
 
 const Button = styled.View`
+  margin-bottom: 15px;
   border: 1px solid ${(props) => (props.accent ? 'transparent' : colors.black)};
   border-radius: 10px;
   width: ${width / 2}px;
   padding: 15px 0px;
-  margin-bottom: ${(props) => (props.accent ? '10px' : '0px')};
   align-items: center;
   background-color: ${(props) => (props.accent ? colors.red : 'transparent')};
 `;
 
 const Text = styled.Text`
+  font-weight: 600;
+  font-size: 14px;
   color: ${(props) => (props.accent ? 'white' : colors.black)};
 `;
 
