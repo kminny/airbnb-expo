@@ -4,6 +4,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Image, Text } from 'react-native';
+import Gate from './components/Gate';
 
 const cacheImages = (images) =>
   images.map((image) => {
@@ -31,7 +32,7 @@ export default function App() {
   };
 
   return isReady ? (
-    <Text>I'm Ready</Text>
+    <Gate />
   ) : (
     <AppLoading onError={console.error} onFinish={handleFinish} startAsync={loadAssets} />
   );
