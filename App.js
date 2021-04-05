@@ -3,8 +3,10 @@ import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Image, Text } from 'react-native';
+import { Image } from 'react-native';
+import { Provider } from 'react-redux';
 import Gate from './components/Gate';
+import store from './redux/store';
 
 const cacheImages = (images) =>
   images.map((image) => {
@@ -32,7 +34,9 @@ export default function App() {
   };
 
   return isReady ? (
-    <Gate />
+    <Provider store={store}>
+      <Gate />
+    </Provider>
   ) : (
     <AppLoading onError={console.error} onFinish={handleFinish} startAsync={loadAssets} />
   );
