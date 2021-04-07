@@ -22,8 +22,8 @@ const cacheFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
-  const handleFinish = () => setIsReady((isReady) => !isReady);
-  const loadAssets = () => {
+  const handleFinish = () => setIsReady(true);
+  const loadAssets = async () => {
     const images = [
       require('./assets/loginBg.jpeg'),
       'https://ebenezersuites.com/wp-content/uploads/2016/06/airbnb-logo-266x300@2x.png',
