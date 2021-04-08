@@ -40,10 +40,10 @@ export const userLogin = (form) => async (dispatch) => {
 
 export const getFavs = () => async (dispatch, getState) => {
   const {
-    usersReducer: { id },
+    usersReducer: { id, token },
   } = getState();
   try {
-    const { data } = await api.favs(id);
+    const { data } = await api.favs(id, token);
     dispatch(setFavs(data));
   } catch (error) {
     console.warn(error);

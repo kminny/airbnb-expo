@@ -28,7 +28,7 @@ export default ({ rooms }) => (
           <RoomCard
             key={room.id}
             id={room.id}
-            isFav={true}
+            isFav={room.is_fav}
             isSuperhost={room.user.superhost}
             photos={room.photos}
             name={room.name}

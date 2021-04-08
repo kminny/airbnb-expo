@@ -78,17 +78,28 @@ const TouchableOpacityContainer = styled.TouchableOpacity`
   top: 10px;
 `;
 
+function getIconName(isFav) {
+  const isAndroid = utils.isAndroid();
+  if (isAndroid) {
+    if (isFav) {
+      return 'md-heart';
+    }
+    return 'md-heart-outline';
+  } else {
+    if (isFav) {
+      return 'ios-heart';
+    }
+    return 'ios-heart-outline';
+  }
+}
+
 const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
   const dispatch = useDispatch();
   return (
     <Container>
       <TouchableOpacityContainer onPress={() => dispatch(toggleFavs(id))}>
         <FavButton>
-          <Ionicons
-            size={28}
-            color={isFav ? colors.red : 'black'}
-            name={utils.isAndroid() ? 'md-heart-outline' : 'ios-heart-outline'}
-          />
+          <Ionicons size={28} color={isFav ? colors.red : 'black'} name={getIconName(isFav)} />
         </FavButton>
       </TouchableOpacityContainer>
       <PhotosContainer>
