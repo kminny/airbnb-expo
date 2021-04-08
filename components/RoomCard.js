@@ -1,12 +1,17 @@
+import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Dimensions, View } from 'react-native';
 import Swiper from 'react-native-web-swiper';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components/native';
+import { toggleFavs } from '../redux/usersSlice';
+import utils from '../utils';
 
 const { width, height } = Dimensions.get('screen');
 
 const Container = styled.View`
+  position: relative;
   width: 100%;
   margin-bottom: 25px;
   align-items: flex-start;
@@ -56,9 +61,31 @@ const SlideImage = styled.Image`
   height: 100%;
 `;
 
+const FavButton = styled.View`
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+`;
+
+const TouchableOpacityContainer = styled.TouchableOpacity`
+  position: absolute;
+  z-index: 10;
+  right: 10px;
+  top: 10px;
+`;
+
 const RoomCard = ({ id, isFav, isSuperhost, photos, name, price }) => {
+  const dispatch = useDispatch();
   return (
     <Container>
+      <TouchableOpacityContainer onPress={() => dispatch(toggleFavs(id))}>
+        <FavButton>
+          <Ionicons size={28} name={utils.isAndroid() ? 'md-heart-outline' : 'ios-heart-outline'} />
+        </FavButton>
+      </TouchableOpacityContainer>
       <PhotosContainer>
         {photos?.length === 0 ? (
           <SlideImage resizeMode="cover" source={require('../assets/roomDefault.jpeg')} />

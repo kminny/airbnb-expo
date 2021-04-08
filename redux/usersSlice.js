@@ -49,4 +49,11 @@ export const getFavs = () => async (dispatch, getState) => {
   }
 };
 
+export const toggleFavs = (roomId) => async (dispatch, getState) => {
+  const {
+    usersReducer: { id, token },
+  } = getState();
+  console.log(roomId, id, token);
+};
+
 export default userSlice.reducer;
