@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
+import colors from '../../../colors';
 import RoomCard from '../../../components/RoomCard';
 
 const Container = styled.View`
@@ -25,6 +26,21 @@ const FakeBar = styled.View`
 const FakeText = styled.Text`
   font-size: 14px;
   font-weight: 300;
+`;
+
+const LoadMore = styled.View`
+  width: 100%;
+  padding: 10px 10px;
+  align-items: center;
+  background-color: ${colors.green};
+  border-radius: 5px;
+  margin-bottom: 30px;
+`;
+
+const LoadMoreText = styled.Text`
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
 `;
 
 export default ({ rooms, increasePage }) => {
@@ -54,7 +70,9 @@ export default ({ rooms, increasePage }) => {
               />
             ))}
             <TouchableOpacity onPress={increasePage}>
-              <Text>Load More</Text>
+              <LoadMore>
+                <LoadMoreText>Load More</LoadMoreText>
+              </LoadMore>
             </TouchableOpacity>
           </ScrollView>
         </>
