@@ -27,7 +27,7 @@ const FakeText = styled.Text`
   font-weight: 300;
 `;
 
-export default ({ rooms }) => {
+export default ({ rooms, increasePage }) => {
   return (
     <Container>
       {rooms.length === 0 ? (
@@ -53,7 +53,7 @@ export default ({ rooms }) => {
                 price={room.price}
               />
             ))}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={increasePage}>
               <Text>Load More</Text>
             </TouchableOpacity>
           </ScrollView>

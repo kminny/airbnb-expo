@@ -11,6 +11,9 @@ const roomsSlice = createSlice({
     favs: [],
   },
   reducers: {
+    increasePage(state, action) {
+      state.explore.page += 1;
+    },
     setExploreRooms(state, action) {
       const { explore } = state;
       const { payload } = action;
@@ -21,25 +24,25 @@ const roomsSlice = createSlice({
           explore.rooms.push(payloadRoom);
         }
       });
-      explore.page = payload.page;
     },
   },
 });
 
-const { setExploreRooms } = roomsSlice.actions;
+export const { increasePage, setExploreRooms } = roomsSlice.actions;
 
-export const getRooms = () => async (dispatch) => {
+export const getRooms = (page) => async (dispatch) => {
   try {
     const {
       data: { results },
-    } = await api.rooms();
+    } = await api.rooms(page);
     dispatch(
       setExploreRooms({
         rooms: results,
-        page: 1,
       })
     );
-  } catch (e) {}
+  } catch (e) {
+    console.warn(e);
+  }
 };
 
 export default roomsSlice.reducer;
