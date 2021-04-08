@@ -18,7 +18,7 @@ const NoFavsText = styled.Text``;
 
 export default ({ rooms }) => (
   <Container>
-    <Title>Favourites</Title>
+    <Title>Favourites ({rooms.length})</Title>
     <ScrollViewContainer
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 50 }}
