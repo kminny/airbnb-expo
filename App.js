@@ -26,6 +26,7 @@ export default function App() {
   const loadAssets = async () => {
     const images = [
       require('./assets/loginBg.jpeg'),
+      require('./assets/roomDefault.jpeg'),
       'https://ebenezersuites.com/wp-content/uploads/2016/06/airbnb-logo-266x300@2x.png',
     ];
     const fonts = [Ionicons.font];
