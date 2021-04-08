@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const callApi = async (method, path, data, jwt) => {
   const headers = {
-    Authorization: jwt,
+    Authorization: jwt ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
   const baseUrl = 'http://127.0.0.1:8000/api/v1';
@@ -24,4 +24,6 @@ export default {
   login: (form) => callApi('post', '/users/login/', form),
   rooms: (page = 1) => callApi('get', `/rooms/?page=${page}`),
   favs: (id) => callApi('get', `/users/${id}/favs/`),
+  toggleFavs: (userId, roomId, token) =>
+    callApi('put', `/users/${userId}/favs/`, { pk: roomId }, token),
 };
