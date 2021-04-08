@@ -30,10 +30,13 @@ const roomsSlice = createSlice({
         });
       }
     },
+    setFavs(state, action) {
+      state.favs = action.payload;
+    },
   },
 });
 
-export const { increasePage, setExploreRooms } = roomsSlice.actions;
+export const { increasePage, setExploreRooms, setFavs } = roomsSlice.actions;
 
 export const getRooms = (page) => async (dispatch) => {
   try {
