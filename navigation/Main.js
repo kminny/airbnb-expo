@@ -11,6 +11,7 @@ import MapScreen from '../screens/Main/Map';
 import Profile from '../screens/Main/Profile';
 import Room from '../screens/Main/Room';
 import Saved from '../screens/Main/Saved';
+import Search from '../screens/Main/Search';
 import utils from '../utils';
 
 const TabsNavigator = createBottomTabNavigator();
@@ -72,5 +73,6 @@ export default () => (
         ),
       }}
     />
+    <MainNavigator.Screen name="Search" component={Search} options={{ headerShown: false }} />
   </MainNavigator.Navigator>
 );

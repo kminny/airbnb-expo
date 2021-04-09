@@ -120,6 +120,7 @@ export default ({
               altitude: 10 * 200,
               //   pitch: 20,
               heading: 0,
+              zoom: 10,
             }}
             style={{ height: '100%', width: '100%' }}
             zoomEnabled={false}
