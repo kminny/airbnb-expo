@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import styled from 'styled-components';
+import api from '../../../api';
 import colors from '../../../colors';
 import DismissKeyboard from '../../../components/DismissKeyboard';
 
@@ -69,15 +71,19 @@ const SearchText = styled.Text`
   font-size: 16px;
 `;
 
+const ResultsText = styled.Text``;
+
 export default () => {
   const navigation = useNavigation();
+  const [searching, setSearching] = useState(false);
   const [beds, setBeds] = useState();
   const [bedrooms, setBedrooms] = useState();
   const [bathrooms, setBathrooms] = useState();
   const [maxPrice, setMaxPrice] = useState();
+  const [results, setResults] = useState();
 
-  const submit = () => {
-    // call api
+  const triggerSearch = async () => {
+    setSearching(true);
     const form = {
       ...(beds && { beds }),
       ...(bedrooms && { bedrooms }),
@@ -85,7 +91,14 @@ export default () => {
       ...(maxPrice && { max_price: maxPrice }),
     };
 
-    console.log(form);
+    try {
+      const { data } = await api.search(form, 'nn');
+      setResults(data);
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      setSearching(false);
+    }
   };
 
   return (
@@ -141,9 +154,10 @@ export default () => {
             </FilterContainer>
           </FiltersContainer>
         </Container>
-        <SearchBtn onPress={submit}>
-          <SearchText>Search</SearchText>
+        <SearchBtn onPress={searching ? null : triggerSearch}>
+          {searching ? <ActivityIndicator color="white" /> : <SearchText>Search</SearchText>}
         </SearchBtn>
+        {results ? <ResultsText>Showing {results.count} results</ResultsText> : null}
       </>
     </DismissKeyboard>
   );

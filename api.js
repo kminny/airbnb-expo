@@ -4,7 +4,7 @@ import axios from 'axios';
 // make post get delete put requests.
 // send jwt automatically
 
-const callApi = async (method, path, data, jwt) => {
+const callApi = async (method, path, data, jwt, params = {}) => {
   const headers = {
     Authorization: jwt ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ const callApi = async (method, path, data, jwt) => {
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
-    return axios[method](fullUrl, { headers });
+    return axios[method](fullUrl, { headers, params });
   } else {
     return axios[method](fullUrl, data, { headers });
   }
@@ -26,4 +26,5 @@ export default {
   favs: (id, token) => callApi('get', `/users/${id}/favs/`, null, token),
   toggleFavs: (userId, roomId, token) =>
     callApi('put', `/users/${userId}/favs/`, { pk: roomId }, token),
+  search: (form, token) => callApi('get', '/rooms/search/', null, null, form),
 };
