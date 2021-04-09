@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ const RoomContainer = styled.View`
 
 const RoomCard = styled.View`
   background-color: white;
-  width: ${width - 50}px;
+  width: ${width - 50};
   height: 120px;
   border-radius: 10px;
   padding: 0px 20px;
@@ -54,7 +54,19 @@ const RoomPrice = styled.Text`
 `;
 
 const Map = ({ rooms }) => {
+  const mapRef = useRef();
   const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+    mapRef.current?.animateCamera(
+      {
+        center: {
+          latitude: parseFloat(rooms[currentIndex].lat),
+          longitude: parseFloat(rooms[currentIndex].lng),
+        },
+      },
+      { duration: 3000 }
+    );
+  }, [currentIndex]);
   const onScroll = (e) => {
     const {
       nativeEvent: {
@@ -67,13 +79,14 @@ const Map = ({ rooms }) => {
   return (
     <Container>
       <MapView
+        ref={mapRef}
         style={StyleSheet.absoluteFill}
         camera={{
           center: {
             latitude: parseFloat(rooms[0].lat),
             longitude: parseFloat(rooms[0].lng),
           },
-          altitude: 700,
+          altitude: 2000,
           pitch: 0,
           heading: 0,
           zoom: 10,
@@ -97,7 +110,7 @@ const Map = ({ rooms }) => {
         pagingEnabled
       >
         {rooms?.map((room) => (
-          <RoomContainer key={room.key}>
+          <RoomContainer key={room.id}>
             <RoomCard>
               <RoomPhoto
                 source={
