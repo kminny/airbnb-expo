@@ -8,6 +8,12 @@ export default ({ rooms }) => {
   const mapRef = useRef();
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
+    if (currentIndex !== 0) {
+      moveMap();
+    }
+  }, [currentIndex]);
+
+  const moveMap = () => {
     mapRef.current?.animateCamera(
       {
         center: {
@@ -17,7 +23,7 @@ export default ({ rooms }) => {
       },
       { duration: 3000 }
     );
-  }, [currentIndex]);
+  };
 
   const onScroll = (e) => {
     const {
@@ -29,7 +35,22 @@ export default ({ rooms }) => {
     setCurrentIndex(position);
   };
 
+  const onRegionChangeComplete = async () => {
+    try {
+      const { northEast, southWest } = await mapRef.current?.getMapBoundaries();
+      console.log(northEast, southWest);
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
   return (
-    <MapPresenter rooms={rooms} mapRef={mapRef} currentIndex={currentIndex} onScroll={onScroll} />
+    <MapPresenter
+      rooms={rooms}
+      mapRef={mapRef}
+      currentIndex={currentIndex}
+      onScroll={onScroll}
+      onRegionChangeComplete={onRegionChangeComplete}
+    />
   );
 };
