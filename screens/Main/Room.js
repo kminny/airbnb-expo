@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
+import MapView, { Marker } from 'react-native-maps';
 import styled from 'styled-components';
 import colors from '../../colors';
 import RoomPhotos from '../../components/RoomPhotos';
@@ -51,6 +52,12 @@ const CheckTime = styled.Text`
   margin-top: 10px;
 `;
 
+const MapContainer = styled.View`
+  width: 100%;
+  height: 200px;
+  margin-top: 30px;
+`;
+
 function formatQtt(number, name) {
   if (number === 1) {
     return `${number} ${name}`;
@@ -77,7 +84,9 @@ export default ({
     <Container>
       <RoomPhotos photos={roomObj.photos} factor={2} />
       <DataContainer>
-        <Address>{roomObj.address}</Address>
+        <Address>
+          {roomObj.address} / ${roomObj.price}
+        </Address>
         <PropertyInfoContainer>
           <PropertyInfoData>
             <PropertyInfoText>{formatQtt(roomObj.beds, 'bed')}</PropertyInfoText>
@@ -101,6 +110,26 @@ export default ({
             {formatTime(roomObj.check_in)} / {formatTime(roomObj.check_out)}
           </CheckTime>
         </CheckContainer>
+        <MapContainer>
+          <MapView
+            camera={{
+              center: {
+                latitude: parseFloat(roomObj.lat),
+                longitude: parseFloat(roomObj.lng),
+              },
+              altitude: 10 * 200,
+              //   pitch: 20,
+              heading: 0,
+            }}
+            style={{ height: '100%', width: '100%' }}
+            zoomEnabled={false}
+            scrollEnabled={false}
+          >
+            <Marker
+              coordinate={{ latitude: parseFloat(roomObj.lat), longitude: parseFloat(roomObj.lng) }}
+            />
+          </MapView>
+        </MapContainer>
       </DataContainer>
     </Container>
   );
