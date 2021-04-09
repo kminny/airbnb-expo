@@ -1,7 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { BlurView } from 'expo-blur';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import colors from '../colors';
 import BackBtn from '../components/Auth/BackBtn';
 import Explore from '../screens/Main/Explore';
@@ -60,6 +62,15 @@ export default () => (
     }}
   >
     <MainNavigator.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-    <MainNavigator.Screen name="RoomDetail" component={Room} />
+    <MainNavigator.Screen
+      name="RoomDetail"
+      component={Room}
+      options={{
+        headerTransparent: true,
+        headerBackground: () => (
+          <BlurView intensity={50} tint="light" style={StyleSheet.absoluteFill} />
+        ),
+      }}
+    />
   </MainNavigator.Navigator>
 );
