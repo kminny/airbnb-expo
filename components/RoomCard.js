@@ -102,7 +102,7 @@ const RoomCard = ({ id, isFav, isSuperhost, photos, name, price, roomObj }) => {
         ) : null}
         <Name>{name}</Name>
         <PriceContainer>
-          <PriceNumber>{price}</PriceNumber>
+          <PriceNumber>${price}</PriceNumber>
           <PriceText> / night</PriceText>
         </PriceContainer>
       </TouchableOpacity>

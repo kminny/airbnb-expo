@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Keyboard } from 'react-native';
 import styled from 'styled-components';
 import api from '../../../api';
 import colors from '../../../colors';
 import DismissKeyboard from '../../../components/DismissKeyboard';
+import RoomCard from '../../../components/RoomCard';
 
 const Container = styled.View`
   padding: 0px;
@@ -71,7 +72,15 @@ const SearchText = styled.Text`
   font-size: 16px;
 `;
 
-const ResultsText = styled.Text``;
+const ResultsText = styled.Text`
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+`;
+
+const Results = styled.ScrollView`
+  margin-top: 25px;
+`;
 
 export default () => {
   const navigation = useNavigation();
@@ -97,6 +106,7 @@ export default () => {
     } catch (error) {
       console.warn(error);
     } finally {
+      Keyboard.dismiss();
       setSearching(false);
     }
   };
@@ -158,6 +168,20 @@ export default () => {
           {searching ? <ActivityIndicator color="white" /> : <SearchText>Search</SearchText>}
         </SearchBtn>
         {results ? <ResultsText>Showing {results.count} results</ResultsText> : null}
+        <Results contentContainerStyle={{ paddingHorizontal: 15 }}>
+          {results?.results?.map((room) => (
+            <RoomCard
+              key={room.id}
+              id={room.id}
+              isFav={room.is_fav}
+              isSuperhost={room.user.superhost}
+              photos={room.photos}
+              name={room.name}
+              price={room.price}
+              roomObj={room}
+            />
+          ))}
+        </Results>
       </>
     </DismissKeyboard>
   );
